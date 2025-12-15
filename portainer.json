@@ -1,0 +1,27 @@
+{
+  "Templates": [
+    {
+      "type": 2,
+      "title": "GitHub Actions Self-Hosted Runner (linux/arm64)",
+      "description": "Builds an ARM64 runner from Dockerfile (downloads official actions runner linux-arm64 asset). Supports org and repo scope.",
+      "categories": ["CI/CD"],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/actions/runner/main/docs/images/runner.png",
+      "repository": {
+        "url": "https://github.com/youruser/portainer-github-runner-arm64",
+        "stackfile": "docker-compose.yml"
+      },
+      "env": [
+        { "name": "GITHUB_URL", "label": "GitHub URL (default https://github.com)", "default": "https://github.com" },
+        { "name": "RUNNER_SCOPE", "label": "Runner scope (org or repo)", "default": "org" },
+        { "name": "RUNNER_OWNER", "label": "Owner (org or repo owner)", "required": true },
+        { "name": "RUNNER_REPO", "label": "Repo name (required if RUNNER_SCOPE=repo)", "default": "" },
+        { "name": "RUNNER_TOKEN", "label": "Registration token (generated in GitHub)", "required": true },
+        { "name": "GITHUB_PAT", "label": "GitHub PAT (optional, recommended for cleanup)", "description": "Personal Access Token used to remove runner on shutdown", "default": "" },
+        { "name": "RUNNER_NAME", "label": "Runner name", "default": "portainer-arm64-runner" },
+        { "name": "RUNNER_LABELS", "label": "Runner labels (comma separated)", "default": "arm64,linux" },
+        { "name": "RUNNER_WORKDIR", "label": "Runner work directory", "default": "/actions-runner/_work" }
+      ]
+    }
+  ]
+}

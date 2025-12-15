@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  github-runner:
+    # Use the pre-built image from GHCR instead of building locally
+    image: ghcr.io/${GITHUB_REPOSITORY}/github-runner-arm64:latest
+    environment:
+      # Default to GitHub.com; change for GitHub Enterprise
+      - GITHUB_URL=${GITHUB_URL:-https://github.com}
+      # org or repo
+      - RUNNER_SCOPE=${RUNNER_SCOPE:-org}
+      # owner (org name) or owner for repo
+      - RUNNER_OWNER=${RUNNER_OWNER}
+      # repo name (only required if RUNNER_SCOPE=repo)
+      - RUNNER_REPO=${RUNNER_REPO}
+      # registration token from GitHub (required)
+      - RUNNER_TOKEN=${RUNNER_TOKEN}
+      # optional personal access token used for cleanup (recommended)
+      - GITHUB_PAT=${GITHUB_PAT}
+      - RUNNER_NAME=${RUNNER_NAME:-portainer-arm64-runner}
+      - RUNNER_LABELS=${RUNNER_LABELS:-arm64,linux}
+      - RUNNER_WORKDIR=${RUNNER_WORKDIR:-/actions-runner/_work}
+    volumes:
+      - runner_work:/actions-runner/_work
+      # allow runners to create docker-in-docker builds (optional)
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+
+volumes:
+  runner_work:
